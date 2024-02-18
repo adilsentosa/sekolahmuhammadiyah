@@ -9,12 +9,16 @@ class Guru(models.Model):
     no_telp = models.CharField(max_length=16)
     email = models.CharField(max_length=32)
     code_color = models.CharField(max_length=10)
+    def __str__(self):
+        return  self.nama_guru
 
 class Jadwal(models.Model):
     hari = models.CharField(max_length=6)
     jumlah_sesi = models.IntegerField()
     lama_sesi = models.IntegerField()
     jam_mulai = models.TimeField()
+    def __str__(self):
+        return self.hari
 
 class JadwalKhusus(models.Model):
     kelas = models.CharField(max_length=3)
@@ -22,16 +26,22 @@ class JadwalKhusus(models.Model):
     sesi = models.CharField(max_length=2)
     hari = models.CharField(max_length=6)
     durasi = models.IntegerField()
+    def __str__(self):
+        return self.kelas
 
 class Jurusan(models.Model):
     id_jurusan = models.CharField(max_length=20)
     nama_jurusan = models.CharField(max_length=32)
+    def __str__(self):
+        return self.nama_jurusan
 
 class Kelas(models.Model):
     id_kelas = models.CharField(max_length=16)
     kelas = models.CharField(max_length=3)
     id_jurusan = models.ForeignKey(Jurusan, on_delete=models.CASCADE)
     nama_kelas = models.CharField(max_length=1)
+    def __str__(self):
+        return self.kelas
 
 class Mapel(models.Model):
     kode_mapel = models.CharField(max_length=10)
@@ -40,6 +50,8 @@ class Mapel(models.Model):
     kelas = models.CharField(max_length=3)
     beban_jam = models.IntegerField()
     id_jurusan = models.ForeignKey(Jurusan, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.kode_mapel
 
 class Penjadwalan(models.Model):
     id_kelas = models.ForeignKey(Kelas, on_delete=models.CASCADE)
@@ -51,10 +63,14 @@ class Penjadwalan(models.Model):
     keterangan = models.CharField(max_length=64)
     jam_mulai = models.TimeField()
     jam_selesai = models.TimeField()
+    def __str__(self):
+        return self.kode_jadwal
 
 class RequestJadwal(models.Model):
     id_guru = models.CharField(max_length=10)
     hari = models.CharField(max_length=255)
+    def __str__(self):
+        return self.id_guru
 
 class Rumusan(models.Model):
     id_guru = models.ForeignKey(Guru, on_delete=models.CASCADE)
@@ -63,6 +79,8 @@ class Rumusan(models.Model):
     total = models.IntegerField()
     beban_kerja = models.IntegerField()
     hasil_rumusan = models.FloatField()
+    def __str__(self):
+        return self.id_guru
 
 class TugasGuru(models.Model):
     id_tugas = models.CharField(max_length=16)
@@ -73,6 +91,8 @@ class TugasGuru(models.Model):
     sisa_jam = models.IntegerField()
     status = models.CharField(max_length=1, default='0')
     beban_jam = models.IntegerField()
+    def __str__(self):
+        return self.id_tugas
 
 class User(models.Model):
     username = models.CharField(max_length=100)
