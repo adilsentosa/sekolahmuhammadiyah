@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here
 
@@ -9,6 +11,14 @@ class Guru(models.Model):
     no_telp = models.CharField(max_length=16)
     email = models.CharField(max_length=32)
     code_color = models.CharField(max_length=10)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    
+    @property
+    def set_nama(self, firts_name, last_name):
+        self.user.first_name = firts_name
+        self.user.last_name = last_name
+        self.user.save()
+        return self
     def __str__(self):
         return  self.nama_guru
 
@@ -94,7 +104,3 @@ class TugasGuru(models.Model):
     def __str__(self):
         return self.id_tugas
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    level = models.CharField(max_length=100)
