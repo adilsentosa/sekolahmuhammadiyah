@@ -34,3 +34,14 @@ class GuruForm(ModelForm):
             user.save()
             guru.save()
         return guru
+
+
+class jadwalForm(ModelForm):
+    class Meta:
+        model = Jadwal
+        fields = '__all__'  
+
+class kelasForm(ModelForm):
+    class Meta:
+        model = Kelas
+        fields = '__all__'

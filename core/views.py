@@ -50,3 +50,93 @@ def registerPage(request):
             return redirect('login')
     context = {'form':form}
     return render(request, 'registration/signup.html', context)
+
+
+#crud kelas
+@login_required(login_url='login')
+def get_kelas (request):
+    form = Kelas.objects.all()
+    context = {
+        'form': form
+    }
+    return render(request, 'kelas/kelas.html', context)
+@login_required(login_url='login')
+def add_kelas(request):
+    form = kelasForm()
+    if request.method == 'POST':
+        form = kelasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('get_kelas')
+    context = {
+        'form': form
+    }
+    return render(request, 'kelas/kelas_form.html', context)
+
+@login_required(login_url='login')
+def update_kelas(request, pk):
+    kelas = Kelas.objects.get(id=pk)
+    form = kelasForm(instance=kelas)
+    if request.method == 'POST':
+        form = kelasForm(request.POST, instance=kelas)
+        if form.is_valid():
+            form.save()
+            return redirect('get_kelas')
+    context = {
+        'form': form
+    }
+    return render(request, 'kelas/kelas_form.html', context)
+
+@login_required(login_url='login')
+def delete_kelas(request, pk):
+    kelas = Kelas.objects.get(id=pk)
+    if request.method == 'POST':
+        kelas.delete()
+        return redirect('get_kelas')
+    context = {
+        'obj': kelas
+    }
+    return render(request, 'kelas/kelas_delete.html', context)
+
+#crud jadwal
+def get_jadwal(request):
+    form = Jadwal.objects.all()
+    context = {
+        'form': form
+    }
+    return render(request, 'jadwal/jadwal.html', context)
+
+def create_jadwal(request):
+    form = jadwalForm()
+    if request.method == 'POST':
+        form = jadwalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('get_jadwal')
+    context = {
+        'form': form
+    }
+    return render(request, 'jadwal/jadwal_form.html', context)
+
+def update_jadwal(request, pk):
+    jadwal = Jadwal.objects.get(id=pk)
+    form = jadwalForm(instance=jadwal)
+    if request.method == 'POST':
+        form = jadwalForm(request.POST, instance=jadwal)
+        if form.is_valid():
+            form.save()
+            return redirect('get_jadwal')
+    context = {
+        'form': form
+    }
+    return render(request, 'jadwal/jadwal_form.html', context)
+
+def delete_jadwal(request, pk):
+    jadwal = Jadwal.objects.get(id=pk)
+    if request.method == 'POST':
+        jadwal.delete()
+        return redirect('get_jadwal')
+    context = {
+        'obj': jadwal
+    }
+    return render(request, 'jadwal/jadwal_delete.html', context)
