@@ -29,7 +29,6 @@ def logoutUser(request):
     return redirect('login')
             
 @login_required(login_url='login')
-@admin_only
 def index(request):
     return render(request, 'index.html',)
   

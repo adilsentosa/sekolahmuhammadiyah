@@ -32,7 +32,7 @@ def admin_only(view_func):
             group = request.user.groups.all()[0].name
                 
         if group == 'pegawai':
-            return redirect('userpage_pegawai')
+            return redirect('index')
         
         if group == 'admin':
             return view_func(request, *args, **kwargs)
