@@ -72,6 +72,7 @@
               </li>
               <li class="nav-item px-3 dropdown pe-0 d-flex align-items-center" enctype="multipart/form-data">
                 <!-- pic admin  -->
+                {% if request.user|has_group:'admin' %}
                 <a href="javascript:;" class="nav-link text-white p-0 mt-0 mb-0 " id="dropdownMenuButton"
                   data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="{% static 'images/Asset_Final.png' %}"
@@ -111,6 +112,8 @@
                     </a>
                   </li>
                 </ul>
+                {% endif %}
+                <!-- pic pegawai -->
                 {% if request.user|has_group:'pegawai' %} 
                       <a href="javascript:;" class="nav-link text-white p-0 mt-0 mb-0 " id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{request.user.pegawai.profile_pic.url}}" class="avatar avatar-sm  position-relative rounded-circle border border-primary">                                                                 
