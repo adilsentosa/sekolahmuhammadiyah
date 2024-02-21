@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<link id="pagestyle" href="{% static 'assets/css/tess.css' %}" rel="stylesheet" />
+
+<main class="main-content position-relative border-radius-lg ">
+  <div class="container-fluid py-4">
+    <div class="row justify-content-center mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="d-lg-flex">
+              <h5 class="mb-0">Tabel Mata Pelajaran</h5>
+              <div class="ms-auto my-auto mt-lg-0 mt-4">
+                <div class="ms-auto my-auto">
+                  <a href="{% url 'create_mapel' %}" class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; Mapel</a>
+                  <a href="" class="btn btn-outline-primary btn-sm mb-0"> Import</a>
+                  <a href="" class="btn btn-outline-primary btn-sm mb-0" target="_blank">Export</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-flush" id="datatable-search">
+                <thead class="thead-light">
+                  <tr>
+                    <th>No</th>
+                    <th>Kode Mapel</th>
+                    <th>Nama Mata Pelajaran</th>
+                    <th>Kelompok</th>
+                    <th>Kelas</th>
+                    <th>Beban Jam</th>
+                    <th class="text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for m in mapel_form %}
+                  <tr>
+                    <td class="text-sm font-weight-small">{{m.id}}</td>
+                    <td class="text-sm font-weight-small">{{m.kode_mapel}}</td>
+                    <td class="text-sm font-weight-small">{{m.nama_mapel}}</td>
+                    <td class="text-sm font-weight-small">{{m.kelompok_mapel}}</td>
+                    <td class="text-sm font-weight-small">{{m.kelas}}</td>
+                    <td class="text-sm font-weight-small">{{m.beban_jam}}</td>
+                    <td class="text-center">
+                      <a href="{% url 'update_mapel' m.id %}" class="btn bg-gradient-warning"
+                        data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                        ubah
+                      </a>
+                      <button type="button" data-bs-toggle="modal" class="btn bg-gradient-danger"
+                        data-bs-target="#Delete{{m.id}}">
+                        hapus
+                      </button>
+                    </td>
+                  </tr>
+                  <div class="modal fade" id="Delete{{m.id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog mt-lg-10">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="ModalLabel">Hapus {{m.nama_mapel}}</h5>
+                          <i class="fas fa-upload ms-3"></i>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure you want to delete<strong> {{m.nama_mapel}}</strong> permanently?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <form method="POST" action="{% url 'delete_mapel' m.id %}">
+                            {% csrf_token %}
+                            <button type="button" class="btn bg-gradient-secondary btn-sm"
+                              data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-danger" name="Confirm">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor%}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}

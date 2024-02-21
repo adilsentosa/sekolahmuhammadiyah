@@ -185,6 +185,76 @@ def delete_requestjadwal(request, pk):
   r.delete()
   messages.success(request, "Data Berhasil Dihapus")
   return redirect('requestjadwal')
+
+# crud jadwal khusus
+@login_required(login_url='login')
+def get_jadwalkhusus (request):
+    context = {
+        'jadwalkhusus_form': JadwalKhusus.objects.all()
+    }
+    return render(request, 'jadwalkhusus/jadwalkhusus.html', context)
+@login_required(login_url='login')
+def add_jadwalkhusus(request):
+    form = JadwalKhususForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():    
+            form.save()
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('create_jadwalkhusus')
+    context = { 'form': form}
+    return render(request, 'jadwalkhusus/jadwalkhusus_form.html', context)
+
+def update_jadwalkhusus(request, pk):
+    j = JadwalKhusus.objects.get(id=pk)
+    form = JadwalKhususForm(request.POST or None, instance=j)
+    if request.method == 'POST' and form.is_valid() :
+        form.save                    
+        messages.success(request, "Data Berhasil Diperbaharui")
+        return redirect('create_jadwalkhusus')
+    context = {'form': form}
+    return render(request, 'jadwalkhusus/jadwalkhusus_form.html', context)
+
+@login_required(login_url='login')
+def delete_jadwalkhusus(request, pk):
+  j = get_object_or_404(JadwalKhusus, id=pk)
+  j.delete()
+  messages.success(request, "Data Berhasil Dihapus")
+  return redirect('jadwalkhusus')
+
+# crud mapel
+@login_required(login_url='login')
+def get_mapel(request):
+    context = {
+        'mapel_form': Mapel.objects.all()
+    }
+    return render(request, 'mapel/mapel.html', context)
+@login_required(login_url='login')
+def add_mapel(request):
+    form = MapelForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():    
+            form.save()
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('create_mapel')
+    context = { 'form': form}
+    return render(request, 'mapel/mapel_form.html', context)
+
+def update_mapel(request, pk):
+    m = Mapel.objects.get(id=pk)
+    form = MapelForm(request.POST or None, instance=m)
+    if request.method == 'POST' and form.is_valid() :
+        form.save                    
+        messages.success(request, "Data Berhasil Diperbaharui")
+        return redirect('create_mapel')
+    context = {'form': form}
+    return render(request, 'mapel/mapel_form.html', context)
+
+@login_required(login_url='login')
+def delete_mapel(request, pk):
+  m = get_object_or_404(Mapel, id=pk)
+  m.delete()
+  messages.success(request, "Data Berhasil Dihapus")
+  return redirect('mapel')
+
+
 #crud kelas
 @login_required(login_url='login')
 def get_kelas (request):

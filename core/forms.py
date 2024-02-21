@@ -70,8 +70,16 @@ class RequestJadwalForm(forms.ModelForm):
     class Meta:
         model = RequestJadwal
         fields = '__all__'
-        
- 
+
+class JadwalKhususForm(forms.ModelForm):
+    class Meta:
+        model = JadwalKhusus
+        fields = '__all__'
+
+class MapelForm(forms.ModelForm):
+    class Meta:
+        model = Mapel
+        fields = '__all__'
 class jadwalForm(ModelForm):
     class Meta:
         model = Jadwal

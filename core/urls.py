@@ -20,6 +20,16 @@ urlpatterns = [
     path('requestjadwal/update_requestjadwal/<str:pk>/', views.update_requestjadwal, name='update_requestjadwal'),
     path('requestjadwal/delete/<str:pk>/', views.delete_requestjadwal, name='delete_requestjadwal'),
     
+    path('jadwal_khusus/', views.get_jadwalkhusus, name='jadwalkhusus'),
+    path('jadwal_khusus/add_jadwal_khusus/', views.add_jadwalkhusus, name='create_jadwalkhusus'),
+    path('jadwal_khusus/update_jadwal_khusus/<str:pk>/', views.update_jadwalkhusus, name='update_jadwalkhusus'),
+    path('jadwal_khusus/delete/<str:pk>/', views.delete_jadwalkhusus, name='delete_jadwalkhusus'),
+    
+    path('mapel/', views.get_mapel, name='mapel'),
+    path('mapel/add_mapel/', views.add_mapel, name='create_mapel'),
+    path('mapel/update_mapel/<str:pk>/', views.update_mapel, name='update_mapel'),
+    path('mapel/delete/<str:pk>/', views.delete_mapel, name='delete_mapel'),
+    
     path('penugasan/', views.get_penugasan, name='penugasan'),
     path('penugasan/add_penugasan/', views.add_penugasan, name='create_penugasan'),
     path('penugasan/update_penugasan/<str:pk>/', views.update_penugasan, name='update_penugasan'),

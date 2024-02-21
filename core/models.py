@@ -33,22 +33,22 @@ class Jadwal(models.Model):
         return self
     def __str__(self):
         return self.hari
-class JadwalKhusus(models.Model):
+class Kelas(models.Model):
+    id_kelas = models.CharField(max_length=16)
     kelas = models.CharField(max_length=3)
+    nama_kelas = models.CharField(max_length=1)
+    # Walikelas = models.ForeignKey(Guru, on_delete=models.CASCADE)
+    def __str__(self):
+        return f'{self.kelas} {self.nama_kelas} '
+    
+class JadwalKhusus(models.Model):
+    id_kelas = models.ForeignKey(Kelas, on_delete=models.CASCADE)
     keterangan = models.CharField(max_length=32)
     sesi = models.CharField(max_length=2)
     hari = models.CharField(max_length=6)
     durasi = models.IntegerField()
     def __str__(self):
-        return self.kelas
-
-class Kelas(models.Model):
-    id_kelas = models.CharField(max_length=16)
-    kelas = models.CharField(max_length=3)
-    nama_kelas = models.CharField(max_length=1)
-    Walikelas = models.ForeignKey(Guru, on_delete=models.CASCADE)
-    def __str__(self):
-        return f'{self.kelas} {self.nama_kelas} '
+        return self.id_kelas
 
 class Mapel(models.Model):
     kode_mapel = models.CharField(max_length=10)
@@ -56,7 +56,6 @@ class Mapel(models.Model):
     kelompok_mapel = models.CharField(max_length=1)
     kelas = models.CharField(max_length=3)
     beban_jam = models.IntegerField()
-    id_guru = models.ForeignKey(Guru, on_delete=models.CASCADE)
     def __str__(self):
         return self.kode_mapel
 
