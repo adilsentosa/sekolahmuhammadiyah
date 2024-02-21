@@ -56,6 +56,22 @@
         </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link {% if request.path == requestjadwal %} active {% endif %}" href="{% url 'requestjadwal' %}">
+        <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+          <i class="ni ni-single-02 text-info text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link-text ms-1">Requset Jadwal</span>
+      </a>
+   </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.path == penugasan %} active {% endif %}" href="{% url 'penugasan' %}">
+        <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+          <i class="ni ni-single-02 text-info text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link-text ms-1">Penugasan Guru</span>
+      </a>
+  </li>
+    <li class="nav-item">
         <a class="nav-link" href="#">
           <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
             <i class="ni ni-time-alarm text-info text-sm opacity-10"></i>

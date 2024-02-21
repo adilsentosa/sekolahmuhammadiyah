@@ -112,6 +112,79 @@ def delete_guru(request, pk):
     messages.success(request, "Data Berhasil Dihapus")
     return redirect('guru')
 
+#crud Penugasan
+@login_required(login_url='login')
+def get_penugasan (request):
+    context = {
+        'penugasan_form': TugasGuru.objects.all()
+    }
+    return render(request, 'penugasan/penugasan.html', context)
+
+@login_required(login_url='login')
+def add_penugasan(request):
+    form = PenugasanForm()
+    if request.method == 'POST':
+        form = PenugasanForm(request.POST)        
+        if form.is_valid() :
+            form.save()
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('create_penugasan')
+    context = { 'form': form}
+    return render(request, 'penugasan/penugasan_form.html', context)
+
+@login_required(login_url='login')
+def update_penugasan(request, pk):
+  p = Kelas.objects.get(id=pk)
+  form = PenugasanForm(instance= p)
+  if request.method == 'POST' :
+    form = PenugasanForm(request.POST, instance= p)
+    if form.is_valid():
+      form.save()
+      messages.success(request, "Data Berhasil Diperbaharui")
+      return redirect('create_penugasan')
+  context = {'form':form}
+  return render(request,'penugasan/penugasan_create.html', context)
+
+@login_required(login_url='login')
+def delete_penugasan(request, pk):
+  p = get_object_or_404(TugasGuru, id=pk)
+  p.delete()
+  messages.success(request, "Data Berhasil Dihapus")
+  return redirect('penugasan')
+
+#crud RequestJadwal
+@login_required(login_url='login')
+def get_requestjadwal (request):
+    context = {
+        'requestjadwal_form': RequestJadwal.objects.all()
+    }
+    return render(request, 'requestjadwal/requestjadwal.html', context)
+@login_required(login_url='login')
+def add_requestjadwal(request):
+    form = RequestJadwalForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():    
+            form.save()
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('create_requestjadwal')
+    context = { 'form': form}
+    return render(request, 'requestjadwal/requestjadwal_form.html', context)
+
+def update_requestjadwal(request, pk):
+    r = RequestJadwal.objects.get(id=pk)
+    form = RequestJadwalForm(request.POST or None, instance=r)
+    if request.method == 'POST' and form.is_valid() :
+        form.save                    
+        messages.success(request, "Data Berhasil Diperbaharui")
+        return redirect('create_requestjadwal')
+    context = {'form': form}
+    return render(request, 'requestjadwal/requestjadwal_form.html', context)
+
+@login_required(login_url='login')
+def delete_requestjadwal(request, pk):
+  r = get_object_or_404(RequestJadwal, id=pk)
+  r.delete()
+  messages.success(request, "Data Berhasil Dihapus")
+  return redirect('requestjadwal')
 #crud kelas
 @login_required(login_url='login')
 def get_kelas (request):

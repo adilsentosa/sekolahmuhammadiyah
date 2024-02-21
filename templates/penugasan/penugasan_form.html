@@ -15,9 +15,7 @@
                           <div class="card">
                             <div class="card-body">
                               <form method="POST" action="" class="multisteps-form__form mb-8"  enctype="multipart/form-data">
-                                {% csrf_token %}                            
-                                 <!-- form add data user -->
-                                   {{form2 | crispy}}                                  
+                                {% csrf_token %}                                                                                 
                                 <!-- form add user -->
                                   {{form | crispy}}                                                                                                 
                                 <button class="btn bg-gradient-dark ms-auto mb-0" type="submit" title="Send">Send</button>   
@@ -30,7 +28,7 @@
                   </div>
                 </div>
               </div>
-            </main>
+            </main>          
             <script>
               var form_fields = document.getElementsByTagName('input')  
               for (var field in form_fields){	
