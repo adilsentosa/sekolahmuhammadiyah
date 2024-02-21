@@ -74,7 +74,7 @@ class Penjadwalan(models.Model):
         return self.kode_jadwal
 
 class RequestJadwal(models.Model):
-    id_guru = models.CharField(max_length=10)
+    id_guru = models.ForeignKey(Guru, on_delete=models.CASCADE, null=True) 
     hari = models.CharField(max_length=255)
     def __str__(self):
         return self.id_guru

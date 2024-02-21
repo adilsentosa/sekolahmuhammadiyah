@@ -60,6 +60,17 @@ class GuruForm(forms.ModelForm):
         model = Guru
         fields = '__all__'
         exclude = ['user']
+        
+class PenugasanForm(forms.ModelForm):
+    class Meta:
+        model = TugasGuru
+        fields = '__all__'
+
+class RequestJadwalForm(forms.ModelForm):
+    class Meta:
+        model = RequestJadwal
+        fields = '__all__'
+        
  
 class jadwalForm(ModelForm):
     class Meta:
