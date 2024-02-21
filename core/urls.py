@@ -11,7 +11,8 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     
     path('guru/', views.get_guru, name='guru'),
-    path('guru/addguru/', views.add_guru, name='create_guru'),
+    path('guru/add_guru/', views.add_guru, name='create_guru'),
+    path('guru/update_guru/<str:pk>/', views.update_guru, name='update_guru'),
     path('guru/delete/<str:pk>/', views.delete_guru, name='delete_guru'),
 
     path('jadwal/', views.get_jadwal, name='get_jadwal'),

@@ -46,7 +46,7 @@
                     <td class="text-sm font-weight-small">{{gr.no_telp}}</td>
                     <td class="text-sm font-weight-small">{{gr.email}}</td>
                     <td class="text-center">
-                      <a href="" class="btn bg-gradient-warning"
+                      <a href="{% url 'update_guru' gr.id %}" class="btn bg-gradient-warning"
                         data-bs-toggle="tooltip" data-bs-original-title="Edit">
                         ubah
                       </a>

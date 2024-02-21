@@ -78,6 +78,32 @@ def add_guru(request):
             return redirect('create_guru')
     context = { 'form': form, 'form2': form2}
     return render(request, 'guru/guru_form.html', context)
+# @login_required(login_url='login')
+# def add_guru(request):
+#     if request.method == 'POST':
+#         form = GuruCreateForm(request.POST)
+#         if form.is_valid():
+#             form.save()        
+#             messages.success(request, "Data Berhasil Ditambah")
+#             return redirect('create_guru')
+#         else:
+#             form = GuruCreateForm()
+#     context = {'form': form}
+#     return render(request, 'guru/guru_form.html', context)
+
+@login_required(login_url='login')
+def update_guru(request, pk):
+    g = Guru.objects.get(id=pk)
+    form = CreateUserForm(request.POST or None, instance=g.user)
+    form2 = GuruForm(request.POST or None, instance=g)
+    if request.method == 'POST' and form.is_valid() and form2.is_valid():
+        form.save          
+        form2.save()            
+        messages.success(request, "Data Berhasil Diperbaharui")
+        return redirect('create_guru')
+    context = {'form': form, 'form2': form2}
+    return render(request, 'guru/guru_form.html', context)
+
 @login_required(login_url='login')
 def delete_guru(request, pk):
     g = get_object_or_404 (Guru, id=pk)
