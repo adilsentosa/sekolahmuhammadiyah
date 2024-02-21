@@ -89,3 +89,17 @@ class kelasForm(ModelForm):
     class Meta:
         model = Kelas
         fields = '__all__'
+
+
+
+class RumusanForm(ModelForm):
+    class Meta:
+        model = Rumusan
+        fields = '__all__'
+
+
+
+class PenjadwalanForm(ModelForm):
+    class Meta:
+        model = Penjadwalan
+        fields = '__all__'

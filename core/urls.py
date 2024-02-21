@@ -43,4 +43,15 @@ urlpatterns = [
     path('kelas/', views.get_kelas, name='get_kelas'),
     path('kelas/add/', views.add_kelas, name='add_kelas'),
     path('kelas/delete/<str:pk>/', views.delete_kelas, name='delete_kelas'),
+
+
+    path('rumusan/', views.get_rumusan, name='get_rumusan'),
+    path('rumusan/add/', views.rumusan_add, name='add_rumusan'),
+    path('rumusan/update/<str:pk>/', views.rumusan_update, name='rumusan_update'),
+    path('rumusan/delete/<str:pk>/', views.rumusan_delete, name='rumusan_delete'),
+
+    path('penjadwalan/', views.get_penjadwalan, name='get_penjadwalan'),
+    path('penjadwalan/add/', views.add_penjadwalan, name='add_penjadwalan'),
+    path('penjadwalan/update/<str:pk>/', views.update_penjadwalan, name='update_penjadwalan'),
+    path('penjadwalan/delete/<str:pk>/', views.delete_penjadwalan, name='delete_penjadwalan'),
 ]

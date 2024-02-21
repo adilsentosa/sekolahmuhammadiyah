@@ -343,3 +343,99 @@ def delete_jadwal(request, pk):
         'obj': jadwal
     }
     return render(request, 'jadwal/jadwal_delete.html', context)
+
+
+def get_rumusan (request):
+    form = Rumusan.objects.all()
+    context = {
+        'form': form
+    }
+    return render(request, 'rumusan/rumusan.html', context)
+
+def rumusan_add (request):
+    form = RumusanForm()
+    if request.method == 'POST':
+        form = RumusanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('get_rumusan')
+    context = {
+        'form': form
+    }
+    return render(request, 'rumusan/rumusan_form.html', context)
+
+def rumusan_update (request, pk):
+    rumusan = Rumusan.objects.get(id=pk)
+    form = RumusanForm(instance=rumusan)
+    if request.method == 'POST':
+        form = RumusanForm(request.POST, instance=rumusan)
+        if form.is_valid():
+            form.save()
+            return redirect('get_rumusan')
+    context = {
+        'form': form
+    }
+    return render(request, 'rumusan/rumusan_form.html', context)
+
+def rumusan_delete(request):
+    rumusan = Rumusan.objects.get(id=pk)
+    if request.method == 'POST':
+        rumusan.delete()
+        return redirect('get_rumusan')
+    context = {
+        'obj': rumusan
+    }
+    return render(request, 'rumusan/rumusan_delete.html', context)
+
+
+
+def get_penjadwalan (request):
+    form = Penjadwalan.objects.all()
+    context = {
+        'form': form
+
+    }
+    return render(request, 'penjadwalan/penjadwalan.html', context)
+
+
+def add_penjadwalan (request):
+    form = PenjadwalanForm()
+    if request.method == 'POST':
+        form = PenjadwalanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('get_penjadwalan')
+    context = {
+        'form': form
+
+    }
+    return render(request, 'penjadwalan/penjadwalan_form.html', context)
+
+def update_penjadwalan (request, pk):
+    penjadwalan = Penjadwalan.objects.get(id=pk)
+    form = PenjadwalanForm(instance=penjadwalan)
+    if request.method == 'POST':
+        form = PenjadwalanForm(request.POST, instance=penjadwalan)
+        if form.is_valid():
+            form.save()
+            return redirect('get_penjadwalan')
+    context = {
+        
+        'form': form
+
+    }
+    return render(request, 'penjadwalan/penjadwalan_form.html', context)
+
+
+def delete_penjadwalan(request):
+    penjadwalan = Penjadwalan.objects.get(id=pk)
+    if request.method == 'POST':
+        penjadwalan.delete()
+        return redirect('get_penjadwalan')
+    context = {
+        
+        'obj': penjadwalan
+
+    }
+    return render(request, 'penjadwalan/penjadwalan_delete.html', context)
+
