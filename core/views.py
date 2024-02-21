@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
@@ -9,6 +10,12 @@ from .forms import CreateUserForm
 
 # Create your views here.
 
+#dashboard
+@login_required(login_url='login')
+def index(request):
+    return render(request, 'index.html',)
+ 
+# login & register
 @unauthenticated_user
 def loginPage(request):
     if request.method == 'POST':
@@ -28,10 +35,6 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
             
-@login_required(login_url='login')
-def index(request):
-    return render(request, 'index.html',)
-  
 @unauthenticated_user
 def registerPage(request):
     form = CreateUserForm()
@@ -50,6 +53,38 @@ def registerPage(request):
     context = {'form':form}
     return render(request, 'registration/signup.html', context)
 
+#crud guru
+@login_required(login_url='login')
+def get_guru (request):
+    context = {
+        'guru_form': Guru.objects.all()
+    }
+    return render(request, 'guru/guru.html', context)
+@login_required(login_url='login')
+def add_guru(request):
+    form = CreateUserForm()
+    form2 = GuruForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        form2 = GuruForm(request.POST)
+        if form.is_valid() and form2.is_valid() :
+            user = form.save()
+            f2 = form2.save(commit=False)
+            f2.user=user
+            f2.save()
+            group = Group.objects.get_or_create(name='pegawai')
+            group[0].user_set.add(user)
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('create_guru')
+    context = { 'form': form, 'form2': form2}
+    return render(request, 'guru/guru_form.html', context)
+@login_required(login_url='login')
+def delete_guru(request, pk):
+    g = get_object_or_404 (Guru, id=pk)
+    g.delete()
+    g.user.delete()
+    messages.success(request, "Data Berhasil Dihapus")
+    return redirect('guru')
 
 #crud kelas
 @login_required(login_url='login')
