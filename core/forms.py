@@ -80,24 +80,20 @@ class MapelForm(forms.ModelForm):
     class Meta:
         model = Mapel
         fields = '__all__'
-class jadwalForm(ModelForm):
+class JadwalForm(ModelForm):
     class Meta:
         model = Jadwal
         fields = '__all__'  
 
-class kelasForm(ModelForm):
+class KelasForm(ModelForm):
     class Meta:
         model = Kelas
         fields = '__all__'
-
-
 
 class RumusanForm(ModelForm):
     class Meta:
         model = Rumusan
         fields = '__all__'
-
-
 
 class PenjadwalanForm(ModelForm):
     class Meta:

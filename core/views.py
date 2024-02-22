@@ -56,12 +56,6 @@ def registerPage(request):
 #crud guru
 @login_required(login_url='login')
 def get_guru (request):
-    context = {
-        'guru_form': Guru.objects.all()
-    }
-    return render(request, 'guru/guru.html', context)
-@login_required(login_url='login')
-def add_guru(request):
     form = CreateUserForm()
     form2 = GuruForm()
     if request.method == 'POST':
@@ -75,22 +69,9 @@ def add_guru(request):
             group = Group.objects.get_or_create(name='pegawai')
             group[0].user_set.add(user)
             messages.success(request, "Data Berhasil Ditambah")
-            return redirect('create_guru')
-    context = { 'form': form, 'form2': form2}
-    return render(request, 'guru/guru_form.html', context)
-# @login_required(login_url='login')
-# def add_guru(request):
-#     if request.method == 'POST':
-#         form = GuruCreateForm(request.POST)
-#         if form.is_valid():
-#             form.save()        
-#             messages.success(request, "Data Berhasil Ditambah")
-#             return redirect('create_guru')
-#         else:
-#             form = GuruCreateForm()
-#     context = {'form': form}
-#     return render(request, 'guru/guru_form.html', context)
-
+            return redirect('guru')
+    context = {'guru_form': Guru.objects.all(), 'form' : form, 'form2' : form2 }
+    return render(request, 'guru/guru.html', context)
 @login_required(login_url='login')
 def update_guru(request, pk):
     g = Guru.objects.get(id=pk)
@@ -100,7 +81,7 @@ def update_guru(request, pk):
         form.save          
         form2.save()            
         messages.success(request, "Data Berhasil Diperbaharui")
-        return redirect('create_guru')
+        return redirect('guru')
     context = {'form': form, 'form2': form2}
     return render(request, 'guru/guru_form.html', context)
 
@@ -155,19 +136,13 @@ def delete_penugasan(request, pk):
 #crud RequestJadwal
 @login_required(login_url='login')
 def get_requestjadwal (request):
-    context = {
-        'requestjadwal_form': RequestJadwal.objects.all()
-    }
-    return render(request, 'requestjadwal/requestjadwal.html', context)
-@login_required(login_url='login')
-def add_requestjadwal(request):
     form = RequestJadwalForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():    
             form.save()
             messages.success(request, "Data Berhasil Ditambah")
-            return redirect('create_requestjadwal')
-    context = { 'form': form}
-    return render(request, 'requestjadwal/requestjadwal_form.html', context)
+            return redirect('requestjadwal')
+    context = {'requestjadwal_form': RequestJadwal.objects.all(), 'form': form}
+    return render(request, 'requestjadwal/requestjadwal.html', context)
 
 def update_requestjadwal(request, pk):
     r = RequestJadwal.objects.get(id=pk)
@@ -175,7 +150,7 @@ def update_requestjadwal(request, pk):
     if request.method == 'POST' and form.is_valid() :
         form.save                    
         messages.success(request, "Data Berhasil Diperbaharui")
-        return redirect('create_requestjadwal')
+        return redirect('requestjadwal')
     context = {'form': form}
     return render(request, 'requestjadwal/requestjadwal_form.html', context)
 
@@ -189,27 +164,20 @@ def delete_requestjadwal(request, pk):
 # crud jadwal khusus
 @login_required(login_url='login')
 def get_jadwalkhusus (request):
-    context = {
-        'jadwalkhusus_form': JadwalKhusus.objects.all()
-    }
-    return render(request, 'jadwalkhusus/jadwalkhusus.html', context)
-@login_required(login_url='login')
-def add_jadwalkhusus(request):
     form = JadwalKhususForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():    
             form.save()
             messages.success(request, "Data Berhasil Ditambah")
-            return redirect('create_jadwalkhusus')
-    context = { 'form': form}
-    return render(request, 'jadwalkhusus/jadwalkhusus_form.html', context)
-
+            return redirect('jadwalkhusus')
+    context = {'jadwalkhusus_form': JadwalKhusus.objects.all(), 'form': form}
+    return render(request, 'jadwalkhusus/jadwalkhusus.html', context)
 def update_jadwalkhusus(request, pk):
     j = JadwalKhusus.objects.get(id=pk)
     form = JadwalKhususForm(request.POST or None, instance=j)
     if request.method == 'POST' and form.is_valid() :
         form.save                    
         messages.success(request, "Data Berhasil Diperbaharui")
-        return redirect('create_jadwalkhusus')
+        return redirect('jadwalkhusus')
     context = {'form': form}
     return render(request, 'jadwalkhusus/jadwalkhusus_form.html', context)
 
@@ -223,27 +191,22 @@ def delete_jadwalkhusus(request, pk):
 # crud mapel
 @login_required(login_url='login')
 def get_mapel(request):
+    form = MapelForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, "Data Berhasil Ditambah")
+        return redirect('mapel')
     context = {
-        'mapel_form': Mapel.objects.all()
+        'mapel_form': Mapel.objects.all(), 'form': form
     }
     return render(request, 'mapel/mapel.html', context)
-@login_required(login_url='login')
-def add_mapel(request):
-    form = MapelForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():    
-            form.save()
-            messages.success(request, "Data Berhasil Ditambah")
-            return redirect('create_mapel')
-    context = { 'form': form}
-    return render(request, 'mapel/mapel_form.html', context)
-
 def update_mapel(request, pk):
     m = Mapel.objects.get(id=pk)
     form = MapelForm(request.POST or None, instance=m)
     if request.method == 'POST' and form.is_valid() :
         form.save                    
         messages.success(request, "Data Berhasil Diperbaharui")
-        return redirect('create_mapel')
+        return redirect('mapel')
     context = {'form': form}
     return render(request, 'mapel/mapel_form.html', context)
 
@@ -254,140 +217,86 @@ def delete_mapel(request, pk):
   messages.success(request, "Data Berhasil Dihapus")
   return redirect('mapel')
 
-
 #crud kelas
 @login_required(login_url='login')
 def get_kelas (request):
-    form = Kelas.objects.all()
-    context = {
-        'form': form
-    }
-    return render(request, 'kelas/kelas.html', context)
-@login_required(login_url='login')
-def add_kelas(request):
-    form = kelasForm()
-    if request.method == 'POST':
-        form = kelasForm(request.POST)
-        if form.is_valid():
+    form = KelasForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid() :
             form.save()
-            return redirect('get_kelas')
-    context = {
-        'form': form
-    }
-    return render(request, 'kelas/kelas_form.html', context)
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('kelas')
+    context = {'kelas_form': Kelas.objects.all(), 'form': form}
+    return render(request, 'kelas/kelas.html', context)
 
 @login_required(login_url='login')
 def update_kelas(request, pk):
-    kelas = Kelas.objects.get(id=pk)
-    form = kelasForm(instance=kelas)
-    if request.method == 'POST':
-        form = kelasForm(request.POST, instance=kelas)
-        if form.is_valid():
-            form.save()
-            return redirect('get_kelas')
-    context = {
-        'form': form
-    }
+    k = Kelas.objects.get(id=pk)
+    form = KelasForm(request.POST or None, instance=k)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('kelas')
+    context = {'form': form}
     return render(request, 'kelas/kelas_form.html', context)
 
 @login_required(login_url='login')
 def delete_kelas(request, pk):
-    kelas = Kelas.objects.get(id=pk)
-    if request.method == 'POST':
-        kelas.delete()
-        return redirect('get_kelas')
-    context = {
-        'obj': kelas
-    }
-    return render(request, 'kelas/kelas_delete.html', context)
+    k = get_object_or_404(Kelas,id=pk)
+    k.delete()
+    messages.success(request, "Data Berhasil Dihapus")
+    return redirect('kelas')
 
 #crud jadwal
+@login_required(login_url='login')
 def get_jadwal(request):
-    form = Jadwal.objects.all()
-    context = {
-        'form': form
-    }
+    form = JadwalForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid() :
+            form.save()
+            messages.success(request, "Data Berhasil Ditambah")
+            return redirect('jadwal')
+    context = {'jadwal_form': Jadwal.objects.all(), 'form': form}
     return render(request, 'jadwal/jadwal.html', context)
 
-def create_jadwal(request):
-    form = jadwalForm()
-    if request.method == 'POST':
-        form = jadwalForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('get_jadwal')
-    context = {
-        'form': form
-    }
-    return render(request, 'jadwal/jadwal_form.html', context)
-
 def update_jadwal(request, pk):
-    jadwal = Jadwal.objects.get(id=pk)
-    form = jadwalForm(instance=jadwal)
-    if request.method == 'POST':
-        form = jadwalForm(request.POST, instance=jadwal)
-        if form.is_valid():
+    j = Jadwal.objects.get(id=pk)
+    form = JadwalForm(request.POST or None, instance=j)
+    if request.method == 'POST' and form.is_valid():
             form.save()
-            return redirect('get_jadwal')
-    context = {
-        'form': form
-    }
+            messages.success(request, "Data Berhasil Diperbaharui")
+            return redirect('jadwal')
+    context = {'form': form}
     return render(request, 'jadwal/jadwal_form.html', context)
 
 def delete_jadwal(request, pk):
-    jadwal = Jadwal.objects.get(id=pk)
-    if request.method == 'POST':
-        jadwal.delete()
-        return redirect('get_jadwal')
-    context = {
-        'obj': jadwal
-    }
-    return render(request, 'jadwal/jadwal_delete.html', context)
+    j = get_object_or_404(Jadwal, id=pk)
+    j.delete()
+    messages.success(request, "Data Berhasil Dihapus")
+    return redirect('jadwal')
 
 
 def get_rumusan (request):
-    form = Rumusan.objects.all()
-    context = {
-        'form': form
-    }
+    form = RumusanForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid() :
+        form.save()
+        messages.success(request, "Data Berhasil Ditambah")
+        return redirect('rumusan')
+    context = { 'rumusan_form': Rumusan.objects.all(), 'form': form}
     return render(request, 'rumusan/rumusan.html', context)
 
-def rumusan_add (request):
-    form = RumusanForm()
-    if request.method == 'POST':
-        form = RumusanForm(request.POST)
-        if form.is_valid():
+def update_rumusan (request, pk):
+    r = Rumusan.objects.get(id=pk)
+    form = RumusanForm(request.POST or None, instance=r)
+    if request.method == 'POST' and form.is_valid() :        
             form.save()
-            return redirect('get_rumusan')
-    context = {
-        'form': form
-    }
+            messages.success(request, "Data Berhasil Diperbaharui")
+            return redirect('rumusan')
+    context = {'form': form }
     return render(request, 'rumusan/rumusan_form.html', context)
 
-def rumusan_update (request, pk):
-    rumusan = Rumusan.objects.get(id=pk)
-    form = RumusanForm(instance=rumusan)
-    if request.method == 'POST':
-        form = RumusanForm(request.POST, instance=rumusan)
-        if form.is_valid():
-            form.save()
-            return redirect('get_rumusan')
-    context = {
-        'form': form
-    }
-    return render(request, 'rumusan/rumusan_form.html', context)
-
-def rumusan_delete(request):
-    rumusan = Rumusan.objects.get(id=pk)
-    if request.method == 'POST':
-        rumusan.delete()
-        return redirect('get_rumusan')
-    context = {
-        'obj': rumusan
-    }
-    return render(request, 'rumusan/rumusan_delete.html', context)
-
-
+def delete_rumusan(request, pk):
+    r = get_object_or_404(Rumusan, id=pk)
+    r.delete()
+    messages.success(request, "Data Berhasil Dihapus")
+    return redirect('rumusan')
 
 def get_penjadwalan (request):
     form = Penjadwalan.objects.all()

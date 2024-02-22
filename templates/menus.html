@@ -2,6 +2,11 @@
 {% load static %}
 
 {% url 'index' as index %}
+{% url 'requestjadwal' as requestjadwal %} 
+{% url 'penugasan' as penugasan %}
+{% url 'jadwalkhusus' as jadwalkhusus %}
+{% url 'rumusan' as rumusan %}
+
 <!-- {% url 'kelas' as kelas %}
 {% url 'create_kelas' as create_kelas %}
 {% url 'ruangan' as ruangan %}
@@ -32,7 +37,7 @@
       </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link {% if request.path == kelas %} active {% endif %}" href="{% url 'kelas' %}">
           <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
             <i class="ni ni-shop text-info text-sm opacity-10"></i>
           </div>
@@ -72,7 +77,7 @@
       </a>
   </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+      <a class="nav-link {% if request.path == jadwal %} active {% endif %}" href="{% url 'jadwal' %}">
           <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
             <i class="ni ni-time-alarm text-info text-sm opacity-10"></i>
           </div>
@@ -87,6 +92,14 @@
           <span class="nav-link-text ms-1">Jadwal Khusus</span>
         </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.path == rumusan %} active {% endif %}" href="{% url 'rumusan' %}">
+        <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+          <i class="ni ni-single-copy-04 text-info text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link-text ms-1">Rumusan</span>
+      </a>
+  </li>
     <li class="nav-item">
         <a class="nav-link" href="#">
           <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">

@@ -34,10 +34,9 @@ class Jadwal(models.Model):
     def __str__(self):
         return self.hari
 class Kelas(models.Model):
-    id_kelas = models.CharField(max_length=16)
+    # id_kelas = models.CharField(max_length=16)
     kelas = models.CharField(max_length=3)
-    nama_kelas = models.CharField(max_length=1)
-    # Walikelas = models.ForeignKey(Guru, on_delete=models.CASCADE)
+    nama_kelas = models.CharField(max_length=30)
     def __str__(self):
         return f'{self.kelas} {self.nama_kelas} '
     

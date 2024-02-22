@@ -1,93 +1,109 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content  %}
 
 <main class="main-content position-relative border-radius-lg ">
-    <div class="container-fluid py-4">       
-      <div class="row justify-content-center mt-4">
-        <div class="col-8">
-          <div class="card">
-            <div class="card-header pb-0">
-                      <div class="d-lg-flex">
-                        <div>
-                          <h5 class="mb-0">Table Ruangan</h5>
-                          <p class="text-sm mb-0">
-                            A lightweight, extendable, dependency-free javascript HTML table plugin.
-                          </p>
-                        </div>
-                        <div class="ms-auto my-auto mt-lg-0 mt-4">
-                          <div class="ms-auto my-auto">
-                              <a href="{% url 'add_jadwal' %}" class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; Ruangan</a>
-                              
-                          </div>
-                        </div>
-                      </div>
+  <div class="container-fluid py-4">
+    <div class="row mb-5">
+      <div class="col-12">
+        <div class="multisteps-form mb-5">
+          <!--progress bar-->
+          <div class="row">
+            <div class="col-12 col-lg-8 mx-auto my-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="mb-0">Form Tambah Range Jam</h5>
+                  <form method="POST" action="" class="multisteps-form__form mb-8"  enctype="multipart/form-data">
+                    {% csrf_token %}                                                             
+                    <!-- form add user -->
+                      {{form | crispy}}                                                                                                 
+                    <button class="btn bg-gradient-dark ms-auto mb-0" type="submit" title="Send">Send</button>   
+                  </form>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="d-lg-flex">
+              <h5 class="mb-0">Tabel Range Jam</h5>
+              <div class="ms-auto my-auto mt-lg-0 mt-4">
+                <div class="ms-auto my-auto">
+                  <a href="" class="btn btn-outline-primary btn-sm mb-0"> Import</a>
+                  <a href="" class="btn btn-outline-primary btn-sm mb-0" target="_blank">Export</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
             <div class="table-responsive">
               <table class="table table-flush" id="datatable-search">
                 <thead class="thead-light">
                   <tr>
-                    <th>hari</th>
-                    <th>jumlah sesi</th>  
-                    <th>lama_sesi</th>  
-                    <th>jam mulai</th> 
-                    <th class="text-center">Tindakan</th>                   
+                    <th>No</th>
+                    <th>Hari</th>
+                    <th>Jumlah Sesi</th>
+                    <th>Lama Sesi</th>
+                    <th>Jam Mulai</th>
+                    <th class="text-center">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for jd in Jadwal%}                  
+                  {% for j in jadwal_form %}
                   <tr>
-                    <td class="text-sm font-weight-small">{{jd.hari}}</td>
-                    <td class="text-sm font-weight-small">{{jd.jumlah_sesi}}</td>   
-                    <td class="text-sm font-weight-small">{{jd.lama_sesi}}</td> 
-                    <td class="text-sm font-weight-small">{{jd.jam_mulai}}</td>               
-                    <td class= "text-center">
-                      <a href="{% url 'update_jadwal' jd.id %}"class="btn btn-outline-success" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                      ubah
+                    <td class="text-sm font-weight-small">{{j.id}}</td>
+                    <td class="text-sm font-weight-small">{{j.hari}}</td>
+                    <td class="text-sm font-weight-small">{{j.jumlah_sesi}}</td>
+                    <td class="text-sm font-weight-small">{{j.lama_sesi}}</td>
+                    <td class="text-sm font-weight-small">{{j.jam_mulai}}</td>
+                    <td class="text-center">
+                      <a href="{% url 'update_jadwal' j.id %}" class="btn bg-gradient-warning"
+                        data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                        ubah
                       </a>
-                      <button type="button"  data-bs-toggle="modal" class="btn btn-outline-danger" data-bs-target="#Delete{{jd.id}}"  >
+                      <button type="button" data-bs-toggle="modal" class="btn bg-gradient-danger"
+                        data-bs-target="#Delete{{j.id}}">
                         hapus
                       </button>
                     </td>
                   </tr>
-                  
-
-                  <div class="modal fade" id="Delete{{rg.id}}" tabindex="-1" aria-hidden="true">
+                  <div class="modal fade" id="Delete{{j.id}}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog mt-lg-10">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="ModalLabel">Hapus{{jd.jd_nummber}}</h5>
+                          <h5 class="modal-title" id="ModalLabel">Hapus {{j.hari}}</h5>
                           <i class="fas fa-upload ms-3"></i>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <p>Are you sure you want to delete<strong> {{jd.jd_nummber}}</strong> permanently?</p>
+                          <p>Are you sure you want to delete<strong> {{j.hari}}</strong> permanently?</p>
                         </div>
                         <div class="modal-footer">
-                        <form method="POST" action="{% url 'delete_ruangan' jd.id %}">
+                          <form method="POST" action="{% url 'delete_jadwal' j.id %}">
                             {% csrf_token %}
-                          <button type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                          <input type="submit" class ="btn btn-danger" name="Confirm">
-                        </form>
+                            <button type="button" class="btn bg-gradient-secondary btn-sm"
+                              data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-danger" name="Confirm">
+                          </form>
                         </div>
                       </div>
                     </div>
                   </div>
-
                   {% endfor%}
                 </tbody>
               </table>
             </div>
           </div>
-        </div> 
-      </div> 
-
-      
-
-
-        
+        </div>
+      </div>
     </div>
-  </div>  
+  </div>
 </main>
 
 
